@@ -1,0 +1,78 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Breef.text_story"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#FFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the title of the story-->
+        <StackPanel Grid.Row="0" Margin="12,17,12,0">
+            <TextBlock TextWrapping="Wrap"
+                       VerticalAlignment="Center"
+                       Text="Title of the story"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       FontSize="36"
+                       Foreground="#000"
+                       FontWeight="Bold" />
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
+            <phone:Pivot Name="myPivot" SelectionChanged="myPivot_SelectionChanged">
+                <phone:PivotItem Margin="12,40,12,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                            TextWrapping="Wrap"
+                            Foreground="#000"
+                            FontSize="30"
+                            >
+                           <Run>This is a simple sample for the pivot control adding text.</Run>
+                           <LineBreak/>
+                           <LineBreak/>
+                           <Run>You can put any content you want here...</Run>
+                        </TextBlock>
+                        <TextBlock Grid.Row="1"
+                            Margin="0,15,15,0"
+                            Foreground="#888"
+                            HorizontalAlignment="Right"
+                            >
+                            Today, 6:10 AM
+                        </TextBlock>
+                    </Grid>
+                </phone:PivotItem>
+            </phone:Pivot>
+            <Grid VerticalAlignment="Bottom">
+                <Grid Width="50"
+                      Height="50"
+                      HorizontalAlignment="Left">
+                    
+                </Grid>
+                <Grid Width="50"
+                      Height="50"
+                      HorizontalAlignment="Right">
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</phone:PhoneApplicationPage>
