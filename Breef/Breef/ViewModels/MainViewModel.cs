@@ -3,19 +3,22 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Breef.Resources;
 
+using Parse;
+using System.Collections.Generic;
+
 namespace Breef.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         public MainViewModel()
         {
-            this.Items = new ObservableCollection<ItemViewModel>();
+            this.Items = new ObservableCollection<Snippet>();
         }
 
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<ItemViewModel> Items { get; private set; }
+        public ObservableCollection<Snippet> Items { get; private set; }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -58,26 +61,103 @@ namespace Breef.ViewModels
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public void LoadData()
+        public async void LoadData()
         {
-            // Sample data; replace with real data
-            this.Items.Add(new ItemViewModel() { ID = "0", LineOne = "runtime one", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
-            this.Items.Add(new ItemViewModel() { ID = "1", LineOne = "runtime two", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus" });
-            this.Items.Add(new ItemViewModel() { ID = "2", LineOne = "runtime three", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent" });
-            this.Items.Add(new ItemViewModel() { ID = "3", LineOne = "runtime four", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos" });
-            this.Items.Add(new ItemViewModel() { ID = "4", LineOne = "runtime five", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            this.Items.Add(new ItemViewModel() { ID = "5", LineOne = "runtime six", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            this.Items.Add(new ItemViewModel() { ID = "6", LineOne = "runtime seven", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            this.Items.Add(new ItemViewModel() { ID = "7", LineOne = "runtime eight", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
-            this.Items.Add(new ItemViewModel() { ID = "8", LineOne = "runtime nine", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu" });
-            this.Items.Add(new ItemViewModel() { ID = "9", LineOne = "runtime ten", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus" });
-            this.Items.Add(new ItemViewModel() { ID = "10", LineOne = "runtime eleven", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent" });
-            this.Items.Add(new ItemViewModel() { ID = "11", LineOne = "runtime twelve", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos" });
-            this.Items.Add(new ItemViewModel() { ID = "12", LineOne = "runtime thirteen", LineTwo = "Maecenas praesent accumsan bibendum", LineThree = "Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur" });
-            this.Items.Add(new ItemViewModel() { ID = "13", LineOne = "runtime fourteen", LineTwo = "Dictumst eleifend facilisi faucibus", LineThree = "Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent" });
-            this.Items.Add(new ItemViewModel() { ID = "14", LineOne = "runtime fifteen", LineTwo = "Habitant inceptos interdum lobortis", LineThree = "Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat" });
-            this.Items.Add(new ItemViewModel() { ID = "15", LineOne = "runtime sixteen", LineTwo = "Nascetur pharetra placerat pulvinar", LineThree = "Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum" });
+            var query = ParseObject.GetQuery("Stories").WhereLessThanOrEqualTo("createdAt", DateTime.Now.ToUniversalTime()).OrderBy("createdAt").OrderByDescending("createdAt");
+            query = query.Limit(30);
+            IEnumerable<ParseObject> results = await query.FindAsync();
 
+            int i = 0;
+            List<Snippet> stories = new List<Snippet>();
+
+            foreach (ParseObject story in results)
+            {
+
+                //All try catches for relevant story information Uncheck Region to view
+                #region
+                string title, info, category, linkToImage;
+                int storyType;
+                DateTime createdOn, endDate, updatedAt;
+
+                try
+                {
+                    title = story.Get<string>("Title");
+                }
+                catch
+                {
+                    title = "";
+                }
+
+                try
+                {
+                    info = story.Get<string>("info");
+                }
+                catch
+                {
+                    info = "";
+                }
+
+                try
+                {
+                    category = story.Get<string>("category");
+                }
+                catch
+                {
+                    category = "";
+                }
+
+                try
+                {
+                    linkToImage = story.Get<string>("linkToImage");
+                }
+                catch
+                {
+                    linkToImage = "";
+                }
+
+                try
+                {
+                    storyType = story.Get<int>("storyType");
+                }
+                catch
+                {
+                    storyType = 0;
+                }
+
+                try
+                {
+                    createdOn = story.Get<DateTime>("createdOn");
+                }
+                catch
+                {
+                    createdOn = DateTime.Now;
+                }
+
+                try
+                {
+                    updatedAt = story.Get<DateTime>("updatedAt");
+                }
+                catch
+                {
+                    updatedAt = DateTime.Now;
+                }
+
+                try
+                {
+                    endDate = story.Get<DateTime>("endDate");
+                }
+                catch
+                {
+                    endDate = DateTime.Now;
+                }
+
+                #endregion
+
+                this.Items.Add(new Snippet() { SnippetID = i.ToString(), Title = title, Info = info, Category = category, ImageLink = linkToImage, StoryType = storyType, CreatedOn = createdOn, UpdatedAt = updatedAt, EndDate = endDate });
+                i++;
+
+            }
+            
             this.IsDataLoaded = true;
         }
 

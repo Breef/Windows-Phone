@@ -9,6 +9,8 @@ using Microsoft.Phone.Shell;
 using Breef.Resources;
 using Breef.ViewModels;
 
+using Parse;
+
 namespace Breef
 {
     public partial class App : Application
@@ -73,6 +75,8 @@ namespace Breef
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+            ParseClient.Initialize("XMHYpiHTExigyoVMNjK3l7MYWpuv0yaoutU5Z5Hj", "BwlBgSEJjAzBqgk5yh2RypAqxsn9KxcTS56cBdPj");
+
         }
 
         // Code to execute when the application is launching (eg, from Start)
