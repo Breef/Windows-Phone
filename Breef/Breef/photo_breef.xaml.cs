@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace Breef
 {
-    public partial class text_story : PhoneApplicationPage
+    public partial class photo_breef : PhoneApplicationPage
     {
-        public text_story()
+        public photo_breef()
         {
             InitializeComponent();
         }

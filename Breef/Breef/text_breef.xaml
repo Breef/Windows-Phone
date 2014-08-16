@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FFF">
+    <Grid x:Name="LayoutRoot" Background="#FFFFFF">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -22,55 +22,38 @@
 
         <!--TitlePanel contains the title of the story-->
         <StackPanel Grid.Row="0" Margin="12,17,12,0">
-            <TextBlock TextWrapping="Wrap"
-                       VerticalAlignment="Center"
-                       Text="Title of the story"
-                       HorizontalAlignment="Center"
-                       TextAlignment="Center"
-                       FontSize="36"
-                       Foreground="#000"
-                       FontWeight="Bold" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,12">
             <phone:Pivot Name="myPivot" SelectionChanged="myPivot_SelectionChanged">
-                <phone:PivotItem Margin="12,40,12,0">
-                    <Grid>
+                <phone:PivotItem Margin="12,40,12,100">
+                    <Grid VerticalAlignment="Center">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"
-                            TextWrapping="Wrap"
-                            Foreground="#000"
-                            FontSize="30"
-                            >
-                           <Run>This is a simple sample for the pivot control adding text.</Run>
-                           <LineBreak/>
-                           <LineBreak/>
-                           <Run>You can put any content you want here...</Run>
-                        </TextBlock>
-                        <TextBlock Grid.Row="1"
-                            Margin="0,15,15,0"
-                            Foreground="#888"
-                            HorizontalAlignment="Right"
-                            >
-                            Today, 6:10 AM
+                        <Image Grid.Row="0" Source="text.png" Width="80" Height="80"/>
+                        <TextBlock Grid.Row="1" TextAlignment="Center" TextWrapping="Wrap" Foreground="#000000" FontSize="30" Margin="0,30,0,0">
+                           <Run>This is a simple sample for the pivot control adding text. You can put any content you want here...</Run>
                         </TextBlock>
                     </Grid>
                 </phone:PivotItem>
             </phone:Pivot>
-            <Grid VerticalAlignment="Bottom">
-                <Grid Width="50"
-                      Height="50"
-                      HorizontalAlignment="Left">
+            <Grid VerticalAlignment="Bottom" Height="100">
+                <Grid Width="50" Height="50" HorizontalAlignment="Left" Margin="20,0,0,0">
                     
                 </Grid>
-                <Grid Width="50"
-                      Height="50"
+                <Grid Width="200"
+                      Height="100"
                       HorizontalAlignment="Right">
-
+                    <TextBlock Grid.Row="0" TextWrapping="Wrap" Foreground="#000000" FontSize="24" TextAlignment="Right">
+                        <Run FontWeight="Bold">Ferguson Riots</Run>
+                        <LineBreak/>
+                        <Run>8/14/14 12:25 PM</Run>
+                        <LineBreak/>
+                        <Run>Ferguson, MO</Run>
+                    </TextBlock>
                 </Grid>
             </Grid>
         </Grid>
